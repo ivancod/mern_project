@@ -1,5 +1,5 @@
 {
     "port": 5000,
-    "mongoUrl": "mongodb+srv://vanstep:KLL112GH0WjIi3JQ@cluster0-dtkgg.mongodb.net/test?retryWrites=true&w=majority",
+    "mongoUrl": "mongodb+srv://vanstep:KLL112GH0WjIi3JQ@cluster0-dtkgg.mongodb.net/test",
     "jwtSecret": "my first app on stack MERN"
 }

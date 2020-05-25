@@ -1,14 +1,14 @@
-const express = require('express')
-const config = require('config')
+const express  = require('express')
+const config   = require('config')
 const mongoose = require('mongoose')
 
 const app = express()
 
-
+app.use(express.json({ extended: true }))
 app.use('/api/auth', require('./router/auth'))
 app.listen(config.get('port'), () => console.log(`Start server..`))
 
-async function start() {
+const start = async () => {
     try {
         await mongoose.connect(config.get('mongoUrl'), {
             useNewUrlParser: true,
@@ -20,5 +20,5 @@ async function start() {
         process.exit(1)
     }
 }
- 
+
 start()

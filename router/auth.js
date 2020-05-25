@@ -7,11 +7,12 @@ const config = require('config')
 
 
 const router = Router()
+
 // /api/auth/register
 router.post('/register', 
     [
-        check('email', 'no emaii').isEmail().normalizeEmail(),
-        check('password', 'min 6').isLength({ min: 6 }).exists()
+        check("email", "Не корректный email").isEmail().normalizeEmail(),
+        check("password", "Минимальная длина 6 символов").isLength({ min: 6 }).exists()
     ],
     async (req, res) => {
         try {
@@ -19,24 +20,23 @@ router.post('/register',
 
             if(!errors.isEmpty()){
                 return res.status(400).json({ 
-                    errors: errors.array(),
-                    message: 'Регистрация не пройдена! no valid data' 
+                    "errors": errors.array(),
+                    "message": "Регистрация не пройдена! Валидация!" 
                 })
             }
 
             const { email, password } = req.body
 
             const isUser = await User.findOne({ email })
-            if(isUser) return res.status(400).json({ message: 'Такой юзер уже есть' })
+            if(isUser) return res.status(400).json({ "message": "Такой пользователь уже существует!" })
 
             const hashPass = await bkr.hash(password, 12)
-            const user = new User({ email, hashPass })
-
+            const user = new User({ email, password: hashPass })
             await user.save()
 
-            res.status(201).json({ message: 'Регистрация пройдена!' })
+            res.status(201).json({ "message": "Регистрация пройдена!" })
         } catch(e) {
-            res.status(500).json({ message: 'Регистрация не пройдена!' })
+            res.status(500).json({ "message": "Регистрация не пройдена! Что то с базой!" })
         }
     }
 )
@@ -44,8 +44,8 @@ router.post('/register',
 // /api/auth/login
 router.post('/login', 
     [
-        check('email', 'no emaii').isEmail().normalizeEmail(),
-        check('password', 'min 6').isLength({ min: 6 }).exists()
+        check('email', 'Не корректный email').isEmail().normalizeEmail(),
+        check('password', 'Минимальная длина 6 символов').isLength({ min: 6 }).exists()
     ],
     async (req, res) => {
         try {
@@ -54,7 +54,7 @@ router.post('/login',
             if(!errors.isEmpty()){
                 return res.status(400).json({ 
                     errors: errors.array(),
-                    message: 'Авторизация не пройдена! no valid data' 
+                    message: 'Авторизация не пройдена! Валидация!' 
                 })
             }
             
@@ -75,7 +75,7 @@ router.post('/login',
             res.json({ token, userId: user.id })
 
         } catch(e) {
-            res.status(500).json({ message: 'авторизация не пройдена!' })
+            res.status(500).json({ message: 'Авторизация не пройдена!' })
         }
     }
 )

@@ -1,6 +1,7 @@
 @import '~materialize-css/dist/css/materialize.min.css'; 
-#root {
-  background-image: url('http://pattern4site.ru/images/carbon/_rebig/2-fon-serogo-karbona.png');
+
+.auth-wrap {
+  background-image: url('http://pattern4site.ru/images/carbon/_rebig/2-fon-serogo-karbona.png'); 
   min-height: 100vh;
 }
 .flex { display: flex; }
